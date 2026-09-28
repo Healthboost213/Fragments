@@ -41,7 +41,7 @@ if len(input_args) >= 5:
         encryptor = AESGCM(secret_key)
 
         # File Division & Encryption
-        batch_size = len(file_data) // (int(input_args[6]) - 1)
+        batch_size = len(file_data) // (int(input_args[6]))
         sequence = 0
         for i in range(0, len(file_data), batch_size):
             nonce = secrets.token_bytes(12)
