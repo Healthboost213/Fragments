@@ -38,4 +38,10 @@ the files at rest.
 I have talked more in-depth about this on my blog. You can read 
 more about it [here](https://monospace.lol/).
 
+### Credits
+- [horcrux](https://github.com/jesseduffield/horcrux) - Probably
+the biggest inspiration to this project overall. It doesn't use passwords
+for it's implementation and allows whole file to be reconstructed with
+a threshold number of files.
+
 
