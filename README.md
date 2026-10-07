@@ -12,7 +12,7 @@ offered a solution to a problem I had.
 
 Creation of Fragments:
 ```
-fragments.py -c [ file name ] -p [ password ] -s [ number of slices ]
+fragments.py -c [ file name ] -s [ number of slices ]
 ```
 Restoration of Fragments:
 ```
