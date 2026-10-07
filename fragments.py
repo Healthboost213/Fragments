@@ -83,11 +83,24 @@ def restore(name, password):
     secret_key = kdf.derive(password_as_bytes)
     decryptor = AESGCM(secret_key)
 
+    # sort
+
+    for i in range(1, len(contains_header)):
+        key = contains_header[i]
+        prev = i - 1
+
+        while int().from_bytes(key[1], byteorder="big") <  int().from_bytes(contains_header[prev][1], byteorder="big") and prev >= 0:
+            contains_header[prev+1] = contains_header[prev]
+            prev -= 1
+
+        contains_header[prev+1] = key
+
     full_file = bytes()
 
     for header in contains_header:
         with open(header[0], 'rb') as file:
             try:
+                print(int().from_bytes(header[1], byteorder="big"))
                 data = file.read()[33:]
                 plain = decryptor.decrypt(header[3], data, header[1])
                 full_file += plain
