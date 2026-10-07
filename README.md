@@ -1,15 +1,41 @@
 # Fragments
+Fragments is a simple CLI utility built with Python that allows you to divide
+and encrypt files. It was a small learning project to understand encryption and 
+hashing better. It is easy to use and has probably been implemented 
+professionally by others but this is just something I wanted to because it 
+offered a solution to a problem I had.
 
-A small hobby project to learn about hashing and encryption properly. Fragments is a small CLI application that allows you to split files into smaller, completely obfuscated fragments which can then be hid to securely store data. This should hopefully keep your data safe for the next 10-20 years until someone builds a powerful enough Quantum Computer with the sufficient Qubits.
+### Requirements
+- Python >= 3.12.10
 
-### Under The Hood
+### Usage
 
-Firstly, The file data is read and stored as a `memoryview` object which should drastically reduce memory usage for large files as data is directly copied from that section of memory instead of creating new objects which will be very useful since we are inspecting slices of binary data which can lead to less memory usage.
+Creation of Fragments:
+```
+fragments.py -c [ file name ] -p [ password ] -s [ number of slices ]
+```
+Restoration of Fragments:
+```
+fragments.py -r [ file name ] -p [ password ]
+```
+**Note**: For restoration of files, the fragments need to be present in the
+root of where the command will be executed.
 
-Next, Fragments uses Argon2id a key-derivation function which can be used to generate AES keys from user-specified passwords. Salts are generated randomly (using cryptographically secure random values) to eliminate password cracking and rainbow tables.
+### Building Fragments
+Fragments uses pyinstaller to build it into an easy to use executable.
+```
+pyinstaller --onefile fragments.py
+```
+The resulting file can be configured into your system's PATH for
+easy access system-wide.
 
-Once a key has been derived, this value can be used as the secret key for encryption. Each file that you encrypt with Fragments gets a completely different key because of the randomized salting. The algorithm of choice for encryption is AES-GCM with a 256-bit key. It ensures data confidentiality as well as integrity by using the associated data tag.
+### How does it work?
+In brief, Fragments uses Argon2id with a cryptographically secure, randomly 
+generated salt value as ingredients to generate a hash. This hash can be used
+as a key for a 256-bit AES cipher which is then used to encrypt and protect
+the files at rest.
 
-Each slice of the file is assigned a unique 96-bit nonce which is used for encryption. To ensure integrity of data, the sequence number of files is stored in the associated data. Then, the sequence number, salt and the nonce are finally prepended with the ciphertext. It's safe to store them beside the file because not much can be done in regards to encryption with only these values.
+I have talked more in-depth about this on my blog. You can read 
+more about it [here](https://monospace.lol/).
 
-It should theoretically work without issue on any OS. I configured it to use POSIX paths so there should be no issues whatsoever.
+
