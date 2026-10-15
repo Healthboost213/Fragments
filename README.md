@@ -36,7 +36,7 @@ as a key for a 256-bit AES cipher which is then used to encrypt and protect
 the files at rest.
 
 I have talked more in-depth about this on my blog. You can read 
-more about it [here](https://monospace.lol/).
+more about it [here](https://monospace.lol/vault/tech/projects/fragments/).
 
 ### Credits
 - [horcrux](https://github.com/jesseduffield/horcrux) - Probably
